@@ -139,10 +139,6 @@ To make the search easier I wanted to extract a list of the installed packages, 
 
 To answer this question we need to dig into TeamCity logs since there we can find any activity related to plugin installation; we can create a table using the following filter: `* source="/opt/teamcity/TeamCity/logs/teamcity-activities.log"`
 
-```
-[2024-07-04 22:08:31,921]   INFO - s.buildServer.ACTIVITIES.AUDIT - plugin_uploaded: Plugin "AyzzbuXY" was updated by "user with id=11" with comment "Plugin was uploaded to /home/ubuntu/.BuildServer/plugins/AyzzbuXY.zip"
-```
-
 The malicious plugin name is [REDACTED].
 
 <img src="./blue/Cattura2.PNG"/>
