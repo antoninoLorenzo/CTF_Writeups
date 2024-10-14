@@ -1,7 +1,9 @@
+# Brains
 
-**CTF**: [Brains](https://tryhackme.com/r/room/brains) - Easy
+> [Brains](https://tryhackme.com/r/room/brains) - Easy
 
 **Table of Contents**
+- [Brains](#brains)
 - [RED](#red)
   - [Reconnaissance](#reconnaissance)
     - [TeamCity](#teamcity)
