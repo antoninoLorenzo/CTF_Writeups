@@ -186,7 +186,7 @@ After some attempts I found a way to make it happen using the payload `1; DROP T
 
 <img src="./screens/6_delete_sqli_payload.PNG">
 <img src="./screens/7_delete_sqli_result.PNG">
-<img src="./screens/8_admin_dashboard.PNG" alt="Admin Dashboard Screenshot">
+<img src="./screens/8_admin_dashboard.png" alt="Admin Dashboard Screenshot">
 
 ## Testing for SSTI
 
